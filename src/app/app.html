@@ -1,0 +1,52 @@
+<div class="app-shell">
+  <aside class="sidebar">
+    <div class="brand-block">
+      <div class="brand-mark">PC</div>
+      <div>
+        <p class="eyebrow">Inventory Suite</p>
+        <h1>Product Console</h1>
+      </div>
+    </div>
+
+    <nav class="nav-links" aria-label="Primary navigation">
+      @for (item of navigationItems; track item.route) {
+        <a
+          [routerLink]="item.route"
+          routerLinkActive="is-active"
+          [routerLinkActiveOptions]="{ exact: item.route === '/products' }"
+          class="nav-link"
+        >
+          <span class="nav-icon"></span>
+          {{ item.label }}
+        </a>
+      }
+    </nav>
+
+    <div class="sidebar-card">
+      <p class="eyebrow">Frontend demo</p>
+      <strong>Dummy data enabled</strong>
+      <p>All changes are stored locally in your browser until a backend is added.</p>
+    </div>
+  </aside>
+
+  <div class="workspace">
+    <header class="topbar">
+      <label class="topbar-search" aria-label="Search products">
+        <span class="topbar-search__icon"></span>
+        <input type="search" placeholder="Search products, SKU, or brand" />
+      </label>
+
+      <div class="profile-chip">
+        <div class="avatar">EA</div>
+        <div>
+          <strong>EZPI Platform Admin</strong>
+          <span>admin@ezpi.in</span>
+        </div>
+      </div>
+    </header>
+
+    <main class="content-area">
+      <router-outlet></router-outlet>
+    </main>
+  </div>
+</div>

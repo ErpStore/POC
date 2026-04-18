@@ -1,0 +1,158 @@
+<section class="page-shell">
+  <div class="hero-card">
+    <div>
+      <p class="eyebrow">Product management</p>
+      <h2>Add Global Product</h2>
+      <p>
+        Capture a new product once and make it available for catalog, pricing, and future backend
+        integration.
+      </p>
+    </div>
+
+    <div class="hero-actions">
+      <a class="ghost-action" routerLink="/products">Back to Inventory</a>
+      <button class="primary-action" type="submit" [disabled]="isSubmitting()" form="product-form">
+        Save Product
+      </button>
+    </div>
+  </div>
+
+  <form class="product-form" [formGroup]="form" (ngSubmit)="submit()" id="product-form">
+    <section class="form-card">
+      <div class="section-heading">
+        <div>
+          <p class="eyebrow">Section 01</p>
+          <h3>Basic details</h3>
+        </div>
+        <p>Fill in the core product identity used across the platform.</p>
+      </div>
+
+      <div class="form-grid two-column">
+        <label>
+          <span>Product name</span>
+          <input type="text" formControlName="name" placeholder="Ex. Organic Honey 250g" />
+          @if (hasError('name')) {
+            <small>Name is required and should be at least 3 characters.</small>
+          }
+        </label>
+
+        <label>
+          <span>Brand</span>
+          <input type="text" formControlName="brand" placeholder="Ex. Dabur" list="brand-options" />
+          <datalist id="brand-options">
+            @for (brand of brands(); track brand) {
+              <option [value]="brand"></option>
+            }
+          </datalist>
+          @if (hasError('brand')) {
+            <small>Brand is required.</small>
+          }
+        </label>
+      </div>
+
+      <label>
+        <span>Description</span>
+        <textarea formControlName="description" rows="4" placeholder="Short product summary"></textarea>
+        @if (hasError('description')) {
+          <small>Description is required and should be descriptive.</small>
+        }
+      </label>
+    </section>
+
+    <section class="form-card">
+      <div class="section-heading">
+        <div>
+          <p class="eyebrow">Section 02</p>
+          <h3>Identifiers</h3>
+        </div>
+        <p>These values become useful when the backend APIs and barcode flows are added later.</p>
+      </div>
+
+      <div class="form-grid three-column">
+        <label>
+          <span>SKU</span>
+          <input type="text" formControlName="sku" placeholder="Ex. HONEY-250" />
+          @if (hasError('sku')) {
+            <small>SKU is required.</small>
+          }
+        </label>
+
+        <label>
+          <span>Barcode</span>
+          <input type="text" formControlName="barcode" placeholder="Ex. 8901234500001" />
+          @if (hasError('barcode')) {
+            <small>Barcode is required.</small>
+          }
+        </label>
+
+        <label>
+          <span>Category</span>
+          <input type="text" formControlName="category" placeholder="Ex. Staples" list="category-options" />
+          <datalist id="category-options">
+            @for (category of categories(); track category) {
+              <option [value]="category"></option>
+            }
+          </datalist>
+          @if (hasError('category')) {
+            <small>Category is required.</small>
+          }
+        </label>
+      </div>
+    </section>
+
+    <section class="form-card split-layout">
+      <div>
+        <div class="section-heading">
+          <div>
+            <p class="eyebrow">Section 03</p>
+            <h3>Pricing and stock</h3>
+          </div>
+          <p>Use numeric values so the frontend dashboard can compute stock summaries.</p>
+        </div>
+
+        <div class="form-grid two-column compact-grid">
+          <label>
+            <span>Price (INR)</span>
+            <input type="number" min="1" formControlName="price" />
+            @if (hasError('price')) {
+              <small>Price must be greater than zero.</small>
+            }
+          </label>
+
+          <label>
+            <span>Current stock</span>
+            <input type="number" min="0" formControlName="stock" />
+            @if (hasError('stock')) {
+              <small>Stock cannot be negative.</small>
+            }
+          </label>
+        </div>
+      </div>
+
+      <aside class="side-panel">
+        <div class="section-heading compact">
+          <div>
+            <p class="eyebrow">Section 04</p>
+            <h3>Availability</h3>
+          </div>
+        </div>
+
+        <label>
+          <span>Status</span>
+          <select formControlName="status">
+            <option value="ACTIVE">Active</option>
+            <option value="DRAFT">Draft</option>
+          </select>
+        </label>
+
+        <div class="note-card">
+          <strong>Mock data note</strong>
+          <p>
+            This screen writes to an in-memory store backed by local browser storage. Later, the same
+            submit handler can call your backend `POST /products` API.
+          </p>
+        </div>
+      </aside>
+    </section>
+  </form>
+</section>
